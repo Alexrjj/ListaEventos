@@ -65,6 +65,26 @@ app.post('/salvar', (req, res) => {
   }
 });
 
+// Deletar evento
+app.post('/deletar', (req, res) => {
+  let id = req.body.id;
+  if(id != undefined) {
+    if (!isNaN(id)) {
+      Evento.destroy({
+        where: {
+          id: id
+        }
+      }).then(() => {
+        res.redirect('/');
+      });
+    }else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
 // Servidor Express
 app.listen(3000, () => {
   console.log(`Server started on port 3000`);

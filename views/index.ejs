@@ -22,12 +22,28 @@
               <td><%= evento.local %> </td>
               <td><%= moment(evento.date).format('DD/MM/YYYY') %> </td>
               <td><%= evento.time %> </td>
-              <td>Deletar</td>
+              <td>
+                <form method="POST" action="/deletar" onsubmit="confirmEvent(event, this)">
+                  <input type="hidden" name="id" value="<%= evento.id %>">
+                  <button class="btn btn-danger">Deletar</button>
+                </form>
+              </td>
             </tr>
           <% }) %>
       </tbody>
     </table>
   </div>
 </body>
+
+<!-- Confirma deleção de evento -->
+<script>
+  function confirmEvent(event, form) {
+    event.preventDefault();
+    let decision = confirm('Deseja realmente deletar o evento?');
+    if (decision) {
+      form.submit();
+    }
+  }
+</script>
 
 <%- include ('partials/footer.ejs') %>
