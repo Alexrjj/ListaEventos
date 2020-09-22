@@ -3,7 +3,7 @@
 
 <body>
   <div class="container">
-    <form method="POST" action="/salvar">
+    <form name="formEvento" method="POST" action="/salvar" onsubmit="validate(event, this)">
       <div class="form-group">
       <label for="name">Nome:</label>
       <input type="text" name="name" id="name">
@@ -21,7 +21,34 @@
 
 <%- include ('partials/footer') %>
 
-
+<!-- Verifica campos -->
 <script>
+  function validate(event, form) {
+    event.preventDefault();
+    let name = formEvento.name.value;
+    let local = formEvento.local.value;
+    let date = formEvento.date.value;
+    let time = formEvento.time.value;
 
+    if(name == "") {
+      alert('Defina o nome do evento.');
+      formEvento.name.focus();
+      return false;
+    } else if(local == "") {
+      alert('Defina o local do evento.');
+      formEvento.local.focus;
+      return false;
+    } else if(date == "") {
+      alert('Defina a data do evento.');
+      formEvento.date.focus;
+      return false;
+    } else if (time == "") {
+      alert('Defina o horário do evento.');
+      formEvento.time.focus;
+      return false;
+    }
+     else {
+      form.submit();
+    }
+  }
 </script>
