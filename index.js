@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Evento = require('./events/Event');
+const moment = require('moment');
 
 // Database Connection
 const connection = require('./database/connection');
@@ -26,7 +27,9 @@ app.use(express.static('public'));
 // --- Rotas ---
 // Padrão
 app.get('/', (req, res) => {
-  res.render('index');
+  Evento.findAll().then(eventos => {
+    res.render('index', {eventos: eventos, moment: moment})
+  })
 });
 
 // Criar evento
