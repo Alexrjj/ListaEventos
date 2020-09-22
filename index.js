@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Evento = require('./events/Event');
+const Guest = require('./guests/Guest');
 const moment = require('moment');
 
 // Database Connection
