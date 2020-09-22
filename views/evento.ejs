@@ -11,11 +11,13 @@
   </div>
 
   <div class="container">
-    <label for="nome-completo">Nome:</label>
-    <input type="text" name="nome-completo" id="nome-completo">
-    <label for="rg">RG:</label>
-    <input type="text" name="rg" id="rg">
-    <button type="submit">Adicionar</button>
+    <form name="formConvidado" method="POST" action="/salvarConvidado" onsubmit="validate(event, this)">
+      <label for="name">Nome:</label>
+      <input type="text" name="name" id="name">
+      <label for="rg">RG:</label>
+      <input type="text" name="rg" id="rg">
+      <button type="submit">Adicionar</button>
+    </form>
   </div>
 
   <div class="container">
@@ -38,3 +40,24 @@
 </body>
 
 <%- include ('partials/footer.ejs') %> 
+
+<!-- Verifica campos -->
+<script>
+  function validate(event, form) {
+    event.preventDefault();
+    let name = formConvidado.name.value;
+    let rg = formConvidado.rg.value;
+
+    if(name == "") {
+      alert('Insira o nome do convidado.');
+      formEvento.name.focus();
+      return false;
+    } else if(rg == "") {
+      alert('Insira o documento RG do convidado.');
+      formEvento.rg.focus;
+      return false;
+    } else {
+      form.submit();
+    }
+  }
+</script>
