@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Rota criar evento
+app.get('/criar', (req, res) => {
+  res.render('criaEvento');
+});
+
 // Rota listar eventos
 app.get('/evento', (req, res) => {
   res.render('evento');
