@@ -14,7 +14,7 @@ app.use(express.static('public'));
 
 // Rota padrão
 app.get('/', (req, res) => {
-  res.send('Olá mundo!');
+  res.render('index');
 });
 
 // Servidor Express
