@@ -1,0 +1,40 @@
+<%- include ('partials/header.ejs') %> 
+<%- include ('partials/navbarEvento.ejs') %> 
+
+<body>
+  <div class="container">
+    <h2>Detalhes do Evento</h2>
+    <p>Nome: </p>
+    <p>Local: </p>
+    <p>Data: </p>
+    <p>Horário: </p>
+  </div>
+
+  <div class="container">
+    <label for="nome-completo">Nome:</label>
+    <input type="text" name="nome-completo" id="nome-completo">
+    <label for="rg">RG:</label>
+    <input type="text" name="rg" id="rg">
+    <button type="submit">Adicionar</button>
+  </div>
+
+  <div class="container">
+    <table class="table">
+      <tr>
+        <thead>
+        <th>Nome Convidado</th>
+        <th>RG</th>
+        <th>Ações</th>
+      </tr>
+        </thead>
+        <tbody>
+          <td>Eustáquio</td>
+          <td>21.460.347-4</td>
+          <td>Deletar</td>
+        </tbody>
+      
+    </table>
+  </div>
+</body>
+
+<%- include ('partials/footer.ejs') %> 

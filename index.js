@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Rota listar eventos
+app.get('/evento', (req, res) => {
+  res.render('evento');
+});
+
 // Servidor Express
 app.listen(3000, () => {
   console.log(`Server started on port ${3000}`);
