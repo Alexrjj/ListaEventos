@@ -33,8 +33,13 @@
       <tbody>
         <% guest.forEach(guest => { %>
         <tr>
+          <form method="POST" action="/deletarConvidado" onsubmit="confirmEvent(event, this)">
           <td><p><%= guest.name %></p></td>
+          <input type="hidden" name="idConvidado" value="<%= guest.id %>">
+          <input type="hidden" name="idEvent" value="<%= event.id %> ">
           <td><p><%= guest.rg %></p></td>
+          <td><button class="btn btn-danger">Deletar</button></td>
+          </form>
         </tr>
         <% }) %>
       </tbody>
@@ -44,8 +49,8 @@
 
 <%- include ('partials/footer.ejs') %>
 
-<!-- Verifica campos -->
 <script>
+  // Verifica campos
   function validate(event, form) {
     event.preventDefault();
     let name = formConvidado.name.value;
@@ -60,6 +65,15 @@
       formEvento.rg.focus;
       return false;
     } else {
+      form.submit();
+    }
+  }
+  
+  // Confirma deleção de evento
+  function confirmEvent(event, form) {
+    event.preventDefault();
+    let decision = confirm('Deseja realmente deletar o evento?');
+    if (decision) {
       form.submit();
     }
   }

@@ -63,17 +63,6 @@ app.get('/evento/:id', (req, res) => {
   });
 });
 
-// Criar convidado
-app.post('/salvarConvidado', (req, res) => {
-  let name = req.body.name;
-  let rg = req.body.rg;
-  let id = req.body.id;
-
-  if (name != undefined) {
-    Guest.create({ name: name, rg: rg, eventId: id, }).then(() => { res.redirect('/evento/' + id); })
-  };
-});
-
 // Salvar evento
 app.post('/salvar', (req, res) => {
   let name = req.body.name;
@@ -114,6 +103,32 @@ app.post('/deletar', (req, res) => {
     }
   } else {
     res.redirect('/');
+  }
+});
+
+// Criar convidado
+app.post('/salvarConvidado', (req, res) => {
+  let name = req.body.name;
+  let rg = req.body.rg;
+  let id = req.body.id;
+
+  if (name != undefined) {
+    Guest.create({ name: name, rg: rg, eventId: id, }).then(() => { res.redirect('/evento/' + id); })
+  };
+});
+
+// Deletar convidado
+app.post('/deletarConvidado', (req, res) => {
+  let id = req.body.idConvidado;
+  let idEvent = req.body.idEvent;
+  if (id != undefined) {
+    if(!isNaN(id)) {
+      Guest.destroy({ where: { id: id } }).then(() => { res.redirect('/evento/' + idEvent) });
+    } else {
+      res.redirect('/evento/' + idEvent)
+    }
+  } else {
+    res.redirect('/evento/' + idEvent)
   }
 });
 
