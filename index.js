@@ -52,7 +52,7 @@ app.get('/evento/:id', (req, res) => {
           eventId: id,
         }
       }).then(guest => {
-        res.render('evento', { event: event, guest: guest });
+        res.render('evento', { event: event, guest: guest, moment: moment });
       })
     } else {
       res.redirect('/');

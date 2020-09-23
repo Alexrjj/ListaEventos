@@ -2,8 +2,10 @@
 <%- include ('partials/navbarCriaEvento') %>
 
 <body>
+  <br>
+  <hr>
   <div class="container">
-    <form name="formEvento" method="POST" action="/salvar" onsubmit="validate(event, this)">
+    <form class="formEvento" name="formEvento" method="POST" action="/salvar" onsubmit="validate(event, this)">
       <div class="form-group">
       <label for="name">Nome:</label>
       <input type="text" name="name" id="name">

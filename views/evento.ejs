@@ -4,25 +4,28 @@
 <body>
   <div class="container">
     <h2>Detalhes do Evento</h2>
-    <p>Nome: <%= event.name %> </p>
-    <p>Local: <%= event.local %> </p>
-    <p>Data: <%= event.date %> </p>
-    <p>Horário: <%= event.time %> </p>
+    <hr>
+    
+    <p><strong>Nome: </strong> <%= event.name %> </p>
+    <p><strong>Local: </strong> <%= event.local %> </p>
+    <p><strong>Data: </strong><%= moment(event.date).format('DD/MM/YYYY') %> </p>
+    <p><strong>Horário: </strong> <%= event.time %> </p>
   </div>
-
+  <br>
   <div class="container">
+    <p><strong>Adicionar convidado:</strong></p>
     <form name="formConvidado" method="POST" action="/salvarConvidado" onsubmit="validate(event, this)">
-      <label for="name">Nome:</label>
-      <input type="text" name="name" id="name">
-      <label for="rg">RG:</label>
+      <label for="name"><strong>Nome: </strong></label>
+      <input placeholder="Insira o nome aqui..." type="text" name="name" id="name">
+      <label for="rg"><strong>RG: </strong></label>
       <input type="text" name="rg" id="rg">
       <input type="hidden" name="id" value="<%= event.id %> ">
-      <button type="submit">Adicionar</button>
+      <button class="btn btn-success" type="submit">Adicionar</button>
     </form>
   </div>
 
   <div class="container">
-    <table class="table">
+    <table class="table table-light table-striped table-bordered">
       <tr>
         <thead>
           <th>Nome do convidado</th>
@@ -72,7 +75,7 @@
   // Confirma deleção de evento
   function confirmEvent(event, form) {
     event.preventDefault();
-    let decision = confirm('Deseja realmente deletar o evento?');
+    let decision = confirm('Deseja realmente deletar o convidado?');
     if (decision) {
       form.submit();
     }
