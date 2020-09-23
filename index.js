@@ -63,16 +63,15 @@ app.get('/evento/:id', (req, res) => {
   });
 });
 
-// Criar convidado, usando função async
-app.post('/salvarConvidado', async (req, res) => {
+// Criar convidado
+app.post('/salvarConvidado', (req, res) => {
   let name = req.body.name;
   let rg = req.body.rg;
   let id = req.body.id;
 
-  const convidado = await Guest.findOne({ where: { name: name } });
-  if (convidado !== null) {
-    Guest.create({ name: name, rg: rg, eventId: id, }) };
-    res.redirect('/evento/' + id);
+  if (name != undefined) {
+    Guest.create({ name: name, rg: rg, eventId: id, }).then(() => { res.redirect('/evento/' + id); })
+  };
 });
 
 // Salvar evento
