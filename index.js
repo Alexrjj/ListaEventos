@@ -26,7 +26,7 @@ app.use(express.static('public'));
 
 
 // --- Rotas ---
-// Padrão
+// Listar eventos
 app.get('/', (req, res) => {
   Evento.findAll().then(eventos => {
     res.render('index', {eventos: eventos, moment: moment})
@@ -38,9 +38,27 @@ app.get('/criar', (req, res) => {
   res.render('criaEvento');
 });
 
-// Listar eventos
-app.get('/evento', (req, res) => {
-  res.render('evento');
+// Listar evento e convidados
+app.get('/evento/:id', (req, res) => {
+  let id = req.params.id;
+  if(isNaN(id)) {
+    res.redirect('/');
+  }
+
+  Evento.findByPk(id).then(event => {
+    if(event != undefined) {
+      res.render('evento', {event: event})
+    } else {
+      res.redirect('/');
+    }
+  }).catch(err => {
+    console.log(err);
+    res.redirect('/');
+  });
+
+  Guest.findAll().then(guests => {
+    res.render('evento', {guests: guests});
+  });  
 });
 
 // Salvar evento
@@ -83,6 +101,29 @@ app.post('/deletar', (req, res) => {
     }
   } else {
     res.redirect('/');
+  }
+});
+
+// Acessar ID evento
+app.get('/:id', (req, res) => {
+  let id = req.params.id;
+  Evento.findOne({
+    where: {
+      id: id
+    }
+  });
+});
+
+// Criar convidado
+app.post('/salvarConvidado', (req, res) => {
+  let name = req.body.name;
+  let rg = req.body.rg;
+
+  if(name != undefined) {
+    Guest.create({
+      name: name,
+      rg: rg
+    });
   }
 });
 

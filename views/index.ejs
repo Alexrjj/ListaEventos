@@ -18,7 +18,7 @@
           <% eventos.forEach(evento => { %>
             <tr>
               <td><%= evento.id %> </td>
-              <td><%= evento.name %> </td>
+              <td><a href="evento/<%= evento.id %>"><%= evento.name %> </a></td>
               <td><%= evento.local %> </td>
               <td><%= moment(evento.date).format('DD/MM/YYYY') %> </td>
               <td><%= evento.time %> </td>
