@@ -15,16 +15,16 @@
         </tr>
       </thead>
       <tbody>
-          <% eventos.forEach(evento => { %>
+          <% events.forEach(event => { %>
             <tr>
-              <td><%= evento.id %> </td>
-              <td><a href="evento/<%= evento.id %>"><%= evento.name %> </a></td>
-              <td><%= evento.local %> </td>
-              <td><%= moment(evento.date).format('DD/MM/YYYY') %> </td>
-              <td><%= evento.time %> </td>
+              <td><%= event.id %> </td>
+              <td><a href="evento/<%= event.id %>"><%= event.name %> </a></td>
+              <td><%= event.local %> </td>
+              <td><%= moment(event.date).format('DD/MM/YYYY') %> </td>
+              <td><%= event.time %> </td>
               <td>
                 <form method="POST" action="/deletar" onsubmit="confirmEvent(event, this)">
-                  <input type="hidden" name="id" value="<%= evento.id %>">
+                  <input type="hidden" name="id" value="<%= event.id %>">
                   <button class="btn btn-danger">Deletar</button>
                 </form>
               </td>

@@ -1,13 +1,13 @@
-<%- include ('partials/header.ejs') %> 
-<%- include ('partials/navbarEvento.ejs') %> 
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbarEvento.ejs') %>
 
 <body>
   <div class="container">
     <h2>Detalhes do Evento</h2>
-      <p>Nome: <%= event.name %> </p>
-      <p>Local: <%= event.local %>  </p>
-      <p>Data: <%= event.date %>  </p>
-      <p>Horário: <%= event.time %>  </p>  
+    <p>Nome: <%= event.name %> </p>
+    <p>Local: <%= event.local %> </p>
+    <p>Data: <%= event.date %> </p>
+    <p>Horário: <%= event.time %> </p>
   </div>
 
   <div class="container">
@@ -16,6 +16,7 @@
       <input type="text" name="name" id="name">
       <label for="rg">RG:</label>
       <input type="text" name="rg" id="rg">
+      <input type="hidden" name="id" value="<%= event.id %> ">
       <button type="submit">Adicionar</button>
     </form>
   </div>
@@ -24,19 +25,24 @@
     <table class="table">
       <tr>
         <thead>
-        <th>Nome Convidado</th>
-        <th>RG</th>
-        <th>Ações</th>
-      </tr>
+          <th>Nome do convidado</th>
+          <th>Documento (RG)</th>
+          <th>Ações</th>
         </thead>
-        <tbody>
-        
-        </tbody>
+      </tr>
+      <tbody>
+        <% guest.forEach(guest => { %>
+        <tr>
+          <td><p><%= guest.name %></p></td>
+          <td><p><%= guest.rg %></p></td>
+        </tr>
+        <% }) %>
+      </tbody>
     </table>
   </div>
 </body>
 
-<%- include ('partials/footer.ejs') %> 
+<%- include ('partials/footer.ejs') %>
 
 <!-- Verifica campos -->
 <script>
@@ -45,11 +51,11 @@
     let name = formConvidado.name.value;
     let rg = formConvidado.rg.value;
 
-    if(name == "") {
+    if (name == "") {
       alert('Insira o nome do convidado.');
       formEvento.name.focus();
       return false;
-    } else if(rg == "") {
+    } else if (rg == "") {
       alert('Insira o documento RG do convidado.');
       formEvento.rg.focus;
       return false;

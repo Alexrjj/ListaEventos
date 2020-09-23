@@ -5,10 +5,14 @@ const Event = require('../events/Event');
 const Guest = connection.define('guests', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   rg: {
     type: Sequelize.STRING,
+    allowNull: false
+  },
+  eventId: {
+    type: Sequelize.INTEGER,
     allowNull: false
   }
 });

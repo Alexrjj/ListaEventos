@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const connection = require('../database/connection');
 
-const Evento = connection.define('eventos', {
+const Event = connection.define('events', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -24,6 +24,6 @@ const Evento = connection.define('eventos', {
   }
 });
 
-Evento.sync({force: false})
+Event.sync({force: false})
 
-module.exports = Evento;
+module.exports = Event;

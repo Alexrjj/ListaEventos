@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const Evento = require('./events/Event');
+const Event = require('./events/Event');
 const Guest = require('./guests/Guest');
 const moment = require('moment');
 
@@ -28,8 +28,8 @@ app.use(express.static('public'));
 // --- Rotas ---
 // Listar eventos
 app.get('/', (req, res) => {
-  Evento.findAll().then(eventos => {
-    res.render('index', {eventos: eventos, moment: moment})
+  Event.findAll().then(events => {
+    res.render('index', { events: events, moment: moment })
   })
 });
 
@@ -41,13 +41,19 @@ app.get('/criar', (req, res) => {
 // Listar evento e convidados
 app.get('/evento/:id', (req, res) => {
   let id = req.params.id;
-  if(isNaN(id)) {
+  if (isNaN(id)) {
     res.redirect('/');
   }
 
-  Evento.findByPk(id).then(event => {
-    if(event != undefined) {
-      res.render('evento', {event: event})
+  Event.findByPk(id).then(event => {
+    if (event != undefined) {
+      Guest.findAll({
+        where: {
+          eventId: id,
+        }
+      }).then(guest => {
+        res.render('evento', { event: event, guest: guest });
+      })
     } else {
       res.redirect('/');
     }
@@ -55,10 +61,18 @@ app.get('/evento/:id', (req, res) => {
     console.log(err);
     res.redirect('/');
   });
+});
 
-  Guest.findAll().then(guests => {
-    res.render('evento', {guests: guests});
-  });  
+// Criar convidado, usando função async
+app.post('/salvarConvidado', async (req, res) => {
+  let name = req.body.name;
+  let rg = req.body.rg;
+  let id = req.body.id;
+
+  const convidado = await Guest.findOne({ where: { name: name } });
+  if (convidado !== null) {
+    Guest.create({ name: name, rg: rg, eventId: id, }) };
+    res.redirect('/evento/' + id);
 });
 
 // Salvar evento
@@ -69,7 +83,7 @@ app.post('/salvar', (req, res) => {
   let time = req.body.time;
 
   if (name != undefined) {
-    Evento.create({
+    Event.create({
       name: name,
       local: local,
       date: date,
@@ -78,7 +92,7 @@ app.post('/salvar', (req, res) => {
     }).then(() => {
       res.redirect('/')
     })
-  }else {
+  } else {
     alert('Verifique os campos!');
     res.redirect('/criar');
   }
@@ -87,43 +101,20 @@ app.post('/salvar', (req, res) => {
 // Deletar evento
 app.post('/deletar', (req, res) => {
   let id = req.body.id;
-  if(id != undefined) {
+  if (id != undefined) {
     if (!isNaN(id)) {
-      Evento.destroy({
+      Event.destroy({
         where: {
           id: id
         }
       }).then(() => {
         res.redirect('/');
       });
-    }else {
+    } else {
       res.redirect('/');
     }
   } else {
     res.redirect('/');
-  }
-});
-
-// Acessar ID evento
-app.get('/:id', (req, res) => {
-  let id = req.params.id;
-  Evento.findOne({
-    where: {
-      id: id
-    }
-  });
-});
-
-// Criar convidado
-app.post('/salvarConvidado', (req, res) => {
-  let name = req.body.name;
-  let rg = req.body.rg;
-
-  if(name != undefined) {
-    Guest.create({
-      name: name,
-      rg: rg
-    });
   }
 });
 
